@@ -12,11 +12,13 @@ This repo is designed to **compare two LLMs of different sizes** running the sam
 
 By keeping the retrieval layer identical (BGE-M3 + FAISS) and only swapping the answering LLM, you get a fair side-by-side comparison. For example:
 
-| Component        | Model              |
-|------------------|-------------------|
-| Embeddings       | `bge-m3`          |
-| LLM #1           | `mistral`         |
-| LLM #2           | `gemma-manual`    |
+## 🧪 Models Compared
+
+| Component  | Model           | Size |
+|------------|----------------|------|
+| Embeddings | `bge-m3`       | —    |
+| LLM #1     | `mistral`      | 7B   |
+| LLM #2     | `gemma-manual` | 2B   |
 
 Switch between models by changing one environment variable (`OLLAMA_MODEL`) — no re-ingestion or re-embedding needed.
 
