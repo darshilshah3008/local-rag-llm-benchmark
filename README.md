@@ -12,10 +12,11 @@ This repo is designed to **compare two LLMs of different sizes** running the sam
 
 By keeping the retrieval layer identical (BGE-M3 + FAISS) and only swapping the answering LLM, you get a fair side-by-side comparison. For example:
 
-| LLM | Size | Use case |
-|---|---|---|
-| `mistral` | ~7B | Higher quality, slower on CPU |
-| `qwen2.5:3b-instruct` | ~3B (≈ half) | Faster generation, lighter on resources |
+| Component        | Model              |
+|------------------|-------------------|
+| Embeddings       | `bge-m3`          |
+| LLM #1           | `mistral`         |
+| LLM #2           | `gemma-manual`    |
 
 Switch between models by changing one environment variable (`OLLAMA_MODEL`) — no re-ingestion or re-embedding needed.
 
@@ -82,14 +83,14 @@ pip install -r requirements.txt
 You need the **embedding model** plus **both LLMs** you want to compare.
 
 ```bash
-# Embedding model (shared across all runs)
+# Embedding model
 ollama pull bge-m3
 
-# LLM option A — larger (~7B)
+# LLMs
 ollama pull mistral
 
-# LLM option B — smaller (~3B, roughly half the size)
-ollama pull qwen2.5:3b-instruct
+# If using custom Gemma model
+ollama create gemma-manual -f Modelfile
 ```
 
 ### 4. Add your PDFs
@@ -126,28 +127,24 @@ Q> exit
 
 The embedding index only needs to be built **once**. After that, swap the answering LLM without re-ingesting:
 
-```bash
-# Run with Mistral (~7B)
-OLLAMA_MODEL=mistral python rag.py
-
-# Run with Qwen 2.5 3B (~3B — about half the size)
-OLLAMA_MODEL=qwen2.5:3b-instruct python rag.py
-```
-
 On **Windows PowerShell**, set the variable first:
 
 ```powershell
-$env:OLLAMA_MODEL = "mistral"
+# Run with Mistral (~7B)
+$env:OLLAMA_MODEL="mistral"
+$env:EMBEDDING_MODEL="bge-m3"
 python rag.py
 
-$env:OLLAMA_MODEL = "qwen2.5:3b-instruct"
+# Run with Gemma (~2B)
+$env:OLLAMA_MODEL="gemma-manual"
+$env:EMBEDDING_MODEL="bge-m3"
 python rag.py
 ```
 
 Or create a `.env` file in the project root:
 
 ```dotenv
-OLLAMA_MODEL=mistral   # change to qwen2.5:3b-instruct for the smaller model
+OLLAMA_MODEL=mistral   # change to gemma-manual for the smaller model
 ```
 
 Ask the **same questions** with each model and compare:
