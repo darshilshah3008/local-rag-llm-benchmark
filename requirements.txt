@@ -1,0 +1,9 @@
+faiss-cpu
+pdfplumber
+pytesseract
+Pillow
+camelot-py
+opencv-python
+numpy
+python-dotenv
+requests
