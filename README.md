@@ -59,8 +59,8 @@ The entire pipeline runs offline — no API keys, no cloud services, no data upl
 ### 1. Clone the repo
 
 ```bash
-git clone https://github.com/<your-username>/upskill-notebooklm-rag-mistral-bge-m3-local.git
-cd upskill-notebooklm-rag-mistral-bge-m3-local
+git clone https://github.com/darshilshah3008/local-rag-llm-benchmark
+cd local-rag-llm-benchmark
 ```
 
 ### 2. Create a virtual environment and install dependencies
